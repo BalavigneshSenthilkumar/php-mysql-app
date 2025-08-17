@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  app:
+    build: .
+    container_name: php-app
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - appnet 
+db:
+    image: mysql:8.0
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: app123
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - appnet
+
